@@ -7,4 +7,5 @@
     <include file="v1/01-create-tables.xml" relativeToChangelogFile="true"/>
     <include file="v1/02-add-indexes.xml" relativeToChangelogFile="true"/>
     <include file="v1/03-rename-column-nickname-table-user.xml" relativeToChangelogFile="true"/>
+    <include file="v1/04-add-column-password-table-user.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

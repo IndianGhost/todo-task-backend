@@ -20,6 +20,9 @@ public class User implements Serializable {
     @Column(name = "nickname", unique = true, nullable = false, length = 15)
     private String nickname;
     @NotBlank
+    @Column(name = "password", nullable = false)
+    private String password;
+    @NotBlank
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @NotBlank
@@ -50,6 +53,14 @@ public class User implements Serializable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -97,6 +108,7 @@ public class User implements Serializable {
         return "User{" +
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", fullName='" + fullName + '\'' +

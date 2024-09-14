@@ -1,8 +1,8 @@
 package io.github.indianghost.todotask.services;
 
-import io.github.indianghost.todotask.UserRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import io.github.indianghost.todotask.domain.User;
+import io.github.indianghost.todotask.repositories.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

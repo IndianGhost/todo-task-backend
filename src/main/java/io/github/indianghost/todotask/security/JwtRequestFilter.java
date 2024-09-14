@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,9 +16,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @SuppressWarnings("unused")
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String PREFIX_BEARER = "Bearer ";
+    private static final int BEGIN_INDEX_OF_JWT = 7;
+
     private final JwtUtils jwtUtils;
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -27,22 +35,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain)
             throws ServletException, IOException {
-
-        final String authorizationHeader = request.getHeader("Authorization");
-
+        final String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);  // Extract JWT token
+        if (nonNull(authorizationHeader) && authorizationHeader.startsWith(PREFIX_BEARER)) {
+            jwt = authorizationHeader.substring(BEGIN_INDEX_OF_JWT);  // Extract JWT token
             username = jwtUtils.extractUsername(jwt);  // Extract username from token
         }
 
         // If the token is valid, authenticate the user
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+        if (nonNull(username) && isNull(SecurityContextHolder.getContext().getAuthentication())) {
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
             if (jwtUtils.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken =

@@ -1,4 +1,4 @@
-package io.github.indianghost.todotask;
+package io.github.indianghost.todotask.repositories;
 
 import io.github.indianghost.todotask.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
