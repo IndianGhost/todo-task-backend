@@ -1,0 +1,122 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create User Table -->
+    <changeSet id="createTableUser" author="abellaali">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nick_name" type="VARCHAR(15)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Create TodoTask Table -->
+    <changeSet id="createTableTodoTask" author="abellaali">
+        <createTable tableName="todo_task">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT"/>
+            <column name="due_date" type="TIMESTAMP"/>
+            <column name="created_date" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+            <column name="responsible_id" type="BIGINT"/>
+        </createTable>
+
+        <!-- Add Foreign Key between TodoTask and User -->
+        <addForeignKeyConstraint constraintName="fk_user_as_responsible"
+                                 baseTableName="todo_task"
+                                 baseColumnNames="responsible_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <!-- Create Role Table -->
+    <changeSet id="createTableRole" author="abellaali">
+        <createTable tableName="role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create Functionality Table -->
+    <changeSet id="createTableFunctionality" author="abellaali">
+        <createTable tableName="functionality">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP"/>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="last_modified_date" type="TIMESTAMP"/>
+            <column name="last_modified_by" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Create Join Table for Role-User Relationship -->
+    <changeSet id="createJoinTableUserRole" author="abellaali">
+        <createTable tableName="user_role">
+            <column name="user_id" type="BIGINT"/>
+            <column name="role_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_for_user_in_user_role"
+                                 baseTableName="user_role"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_for_role_in_user_role"
+                                 baseTableName="user_role"
+                                 baseColumnNames="role_id"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Create Join Table for Role-Functionality Relationship -->
+    <changeSet id="createJoinTableRoleFunctionality" author="abellaali">
+        <createTable tableName="role_functionality">
+            <column name="role_id" type="BIGINT"/>
+            <column name="functionality_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_for_role_in_role_functionality"
+                                 baseTableName="role_functionality"
+                                 baseColumnNames="role_id"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_for_functionality_in_role_functionality"
+                                 baseTableName="role_functionality"
+                                 baseColumnNames="functionality_id"
+                                 referencedTableName="functionality"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

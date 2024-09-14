@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: todo-task
+  datasource:
+    url: jdbc:postgresql://localhost:5432/todotask
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none  # Use 'update', 'create', 'create-drop' for schema management, or 'none' if Liquibase is managing schema
+    show-sql: true    # Optional: Show SQL queries in the logs
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: true   # Ensure Liquibase is enabled
+    change-log: classpath:/db/changelog/master.xml
+
+logging:
+  level:
+    org:
+      hibernate: DEBUG  # Optional: Log SQL and Hibernate actions
