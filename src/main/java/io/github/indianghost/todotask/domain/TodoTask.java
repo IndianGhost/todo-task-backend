@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import static java.util.Objects.nonNull;
+
 @SuppressWarnings("unused")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -68,6 +70,7 @@ public class TodoTask implements Serializable {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+        this.dueOver = isDueOver();
     }
 
     public LocalDateTime getCreatedDate() {
@@ -103,10 +106,11 @@ public class TodoTask implements Serializable {
     }
 
     public boolean isDueOver() {
-        return dueOver;
+        return nonNull(dueDate) && LocalDateTime.now().isAfter(dueDate);
     }
 
-    public void setDueOver(boolean dueOver) {
+    // Prevent editing dueOver directly as it's calculated from dueDate
+    private void setDueOver(boolean dueOver) {
         this.dueOver = dueOver;
     }
 

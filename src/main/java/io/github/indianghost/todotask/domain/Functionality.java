@@ -31,12 +31,7 @@ public class Functionality implements Serializable {
     private LocalDateTime lastModifiedDate;
     @LastModifiedBy
     private String lastModifiedBy;
-    @ManyToMany
-    @JoinTable(
-            name = "role_functionality", // Intermediate table name
-            joinColumns = @JoinColumn(name = "Functionality_id"), // Foreign key to {@link Functionality}
-            inverseJoinColumns = @JoinColumn(name = "role_id") // Foreign key to {@link Role}
-    )
+    @ManyToMany(mappedBy = "functionalities")
     Set<Role> roles = new HashSet<>();
 
     public Functionality() {

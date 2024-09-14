@@ -23,19 +23,14 @@ public class User implements Serializable {
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @NotBlank
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     @Formula("CONCAT(UPPER(SUBSTRING(first_name, 1, 1)), LOWER(SUBSTRING(first_name, 2)), ' ', " +
             "UPPER(SUBSTRING(last_name, 1, 1)), LOWER(SUBSTRING(last_name, 2)))")
     private String fullName;
     @OneToMany(mappedBy = "responsible")
     Set<TodoTask> tasks = new HashSet<>();
-    @ManyToMany
-    @JoinTable(
-            name = "user_role", // Intermediate table name
-            joinColumns = @JoinColumn(name = "user_id"), // Foreign key to {@link User}
-            inverseJoinColumns = @JoinColumn(name = "role_id") // Foreign key to {@link Role}
-    )
+    @ManyToMany(mappedBy = "users")
     Set<Role> roles = new HashSet<>();
 
     public User() {

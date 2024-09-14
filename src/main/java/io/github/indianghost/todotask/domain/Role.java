@@ -38,7 +38,7 @@ public class Role implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id") // Foreign key to {@link User}
     )
     Set<User> users = new HashSet<>();
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(
             name = "role_functionality", // Intermediate table name
             joinColumns = @JoinColumn(name = "role_id"), // Foreign key to {@link Role}
