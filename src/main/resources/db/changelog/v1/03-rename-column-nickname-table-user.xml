@@ -3,8 +3,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-
-    <include file="v1/01-create-tables.xml" relativeToChangelogFile="true"/>
-    <include file="v1/02-add-indexes.xml" relativeToChangelogFile="true"/>
-    <include file="v1/03-rename-column-nickname-table-user.xml" relativeToChangelogFile="true"/>
+    <!-- Rename column nickname in table user -->
+    <changeSet id="renameColumnNicknameInTableUser" author="abellaali">
+        <renameColumn tableName="user" oldColumnName="nick_name" newColumnName="nickname"/>
+    </changeSet>
 </databaseChangeLog>

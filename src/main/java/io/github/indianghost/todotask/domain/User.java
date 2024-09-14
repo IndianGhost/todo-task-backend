@@ -17,8 +17,8 @@ public class User implements Serializable {
     private Long id;
     @NotBlank
     @Size(max = 15)
-    @Column(name = "nick_name", unique = true, nullable = false, length = 15)
-    private String nickName;
+    @Column(name = "nickname", unique = true, nullable = false, length = 15)
+    private String nickname;
     @NotBlank
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -44,12 +44,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getFirstName() {
@@ -96,7 +96,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", nickName='" + nickName + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", fullName='" + fullName + '\'' +
